@@ -20,7 +20,10 @@ export default class Register extends Component {
       email: '',
       password: '',
       confirm: '',
-        avatar: ''
+        avatar: '',
+        flash:' ',
+        isValid:false
+
     }
   }
   
@@ -60,9 +63,24 @@ export default class Register extends Component {
       avatar: e.target.value
     })
   }
-
   onSubmit(e) {
     e.preventDefault();
+
+if(this.state.email === "med@gmail.com"){
+  this.setState({
+    flash :"email deja utiliser",
+    isValid:false
+  })
+}
+  else
+  {
+    this.setState({
+      flash :" ",
+      isValid:true
+    })
+  }
+  if(this.state.isValid){
+
     const user = {
       firstname: this.state.firstname,
       lastname :this.state.lastname,
@@ -71,17 +89,36 @@ export default class Register extends Component {
       //confirm: this.state.confirm,
       avatar: this.state.avatar   
     }
-
     console.log(user);
-
+    this.setState({
+      firstname: '',
+      lastname:'',
+      email: '',
+      password: '',
+      confirm: '',
+        avatar: '',
+        flash:' ',
+        isValid:false
+    })
+/*
     axios.post('http://localhost:5000/users/register', user)
       .then(res => console.log(res.data))
-      console.log(user);
-    window.location = './login';
+    window.location = './login';*/
+  }
+    else
+    console.log('problem');
   }
   render() {
     return (
       <div id="marginNav">
+     {  this.state.flash !== " "? 
+        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+      {this.state.flash}
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>:null
+  }  
      <h1>REGISTER</h1>
       <form onSubmit={this.onSubmit}>
         <div className="row">
@@ -118,7 +155,6 @@ export default class Register extends Component {
                     />  
             </div>           
          </div>
-
          <div className="row">
             <div className="form-group col-6">
                 <input  type="password"
@@ -158,7 +194,8 @@ export default class Register extends Component {
                 <div className="form-group col-2" >
                     <input type="reset" value="Reset" className="btn btn-outline-warning btn-block" />
                 </div>
-        </div>              
+        </div>   
+        
       </form>
     </div>
     )
