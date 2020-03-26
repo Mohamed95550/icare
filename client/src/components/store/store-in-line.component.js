@@ -60,8 +60,8 @@ export default class ProductList extends Component {
 
   render() {
     return (
-      <div id="marginNav">
-      <h5><a href="#" className="badge badge-success" id="badge">Store</a></h5>
+      <div id="marginNavStore">
+       <h1>STORE</h1> 
   
           <div className="row">
              { this.productList() }

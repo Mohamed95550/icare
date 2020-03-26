@@ -55,7 +55,7 @@ export default class ProductList extends Component {
   render() {
     return (
       <div id="marginNav">
-          <h5><a href="#" className="badge badge-success" id="badge">List products</a></h5>
+          <h1>PRODUCTS</h1> 
           <Link to={"/create"}> <span className="btn btn-outline-success" ><b id="b">+</b> New product</span></Link> 
         
         <table className="table">
@@ -77,21 +77,4 @@ export default class ProductList extends Component {
       </div>
     )
   }
-}
-
-function setStock (props){
-  if(Number(this.product.stock)>50){
-     return (
-      <span className="badge badge-info" id="stockStyle">{props.product.stock}</span>
-    );
-  }
-  if((Number(props.product.stock) < 49) && (Number(props.product.stock) > 10)){
-    return (
-      <span className="badge badge-warning" id="stockStyle">{props.product.stock}</span>
-      );
-  }
-  else
-  return (
-    <span className="badge badge-danger" id="stockStyle">{props.product.stock}</span>
-    );
 }

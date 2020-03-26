@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 var FontAwesome = require('react-fontawesome');
 
 export default class ContactUs extends Component {
@@ -64,7 +64,7 @@ export default class ContactUs extends Component {
   render() {
     return (
       <div id="marginNav" className="container">
-       <h5><a href="#" className="badge badge-success" id="badge">Contact us</a></h5> 
+       <h1>CONTACT US</h1> 
       <p> <FontAwesome name='calendar' />{this.state.time} </p>
       <form onSubmit={this.onSubmit}>
 

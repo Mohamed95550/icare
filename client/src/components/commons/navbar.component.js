@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Product = props => (
   <ul>
-    <li><a href={"/edit/"+props.product._id}><img className="smallImage" src={props.product.images} /></a> <a href="#" className="badge badge-warning">{props.product.price} &#8364;</a><a href={"/edit/"+props.product._id}> {props.product.title}</a></li>
+    <li><a href={"/edit/"+props.product._id}><img alt="" className="smallImage" src={props.product.images} /></a> <a href="#" className="badge badge-warning">{props.product.price} &#8364;</a><a href={"/edit/"+props.product._id}> {props.product.title}</a></li>
   </ul>
 )
 
@@ -19,7 +19,7 @@ class Navbar extends Component {
   {
     let value = e.target.value;
    if(value === ' ' || value === ''){
-      console.log('pas de resulats');
+      console.log('No results');
   }
   else
    axios.get('http://localhost:5000/products/searching/'+value)
@@ -85,7 +85,7 @@ class Navbar extends Component {
             </button>
               <div className="dropdown-content">
                   <a href="./register">Register</a>
-                  <a href="./localauth">Login</a>
+                  <a href="./login">Login</a>
                   <a href="http://localhost:5000/auth/google">Google</a>
               </div>
           </div>

@@ -179,7 +179,12 @@ background-color: greenyellow;
 
 /************************* end caddie dropdown ************/
 #marginNav{
-  margin-top: 45px;
+  margin-top: 30px;
+  box-shadow: 3px 1px 4px 1px rgba(0,0,0,0.2);
+  padding:20px;
+}
+#marginNavStore{
+  margin-top: 30px;
 }
 #content{
   min-height: 330px;
