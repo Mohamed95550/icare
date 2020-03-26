@@ -3,12 +3,15 @@ const mongoose = require('mongoose');
 const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 5000;
-const productsController = require('./routes/product.controller');
+const productController = require('./routes/product.controller');
+const userController = require('./routes/user.controller');
 const passport = require ('passport');
 const keys = require('./config/keys');
 const googleStrategy = require ('passport-google-oauth20').Strategy;
+const localStrategy = require ('passport-local').Strategy;
 
 app.use(cors());
+
 
 passport.use(new googleStrategy({
 
@@ -55,7 +58,8 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
-app.use('/products', productsController);
+app.use('/products', productController);
+app.use('/users', userController);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
