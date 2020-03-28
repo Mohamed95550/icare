@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
+const passport = require('../config/passport');
+
 
 
 router.route('/').get((req, res) => {
@@ -14,7 +17,7 @@ router.route('/register').post((req, res) => {
     let data = new Date();
     const firstname= req.body.firstname;
     const lastname= req.body.lastname;
-    const email = req.body.firstname;
+    const email = req.body.email;
     const password = req.body.password;
     const date = data.now;
     const role = req.body.role;
@@ -29,14 +32,19 @@ router.route('/register').post((req, res) => {
       role,
       avatar
     });
-  
-    newUser.save()
-    .then(() => res.json('User added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-  });
-
-
-  
+/***************** Crypt Password user *****************/
+  bcrypt.genSalt(10,(err,salt)=>
+      bcrypt.hash(newUser.password,salt, (err,hash) => {
+          if(err) throw(err);
+          //set password to hashed
+          newUser.password = hash;
+          //save user
+          newUser.save()
+            .then(() => res.json('User added!'))
+            .catch(err => res.status(400).json('Error: ' + err));
+      }));
+    
+  }); 
 
 //get user by id
 router.route('/:id').get((req, res) => {
@@ -45,7 +53,20 @@ router.route('/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-//delete one product by id
+//authentification
+router.route('/login').post((req, res, next) => {
+  passport.authenticate('localStrategy', {
+    successRedirect:'./dashboard',
+    failureRedirect:'./login' })
+});
+/*
+router.route('/auth/:email/:password').get((req, res) => {
+  User.findOne({email:req.params.email})
+  .then(user => res.json(user))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
+*/
+//delete one user by id
 router.route('/:id').delete((req, res) => {
   User.findByIdAndDelete(req.params.id)
     .then(() => res.json('User deleted.'))
@@ -80,3 +101,5 @@ router.route('/searching/:value').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 module.exports = router;
+
+

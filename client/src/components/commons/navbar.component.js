@@ -12,23 +12,29 @@ class Navbar extends Component {
   constructor(props){
     super(props)
       this.state={
-        products:[]  
+        products:[] ,
+        show:false 
       }
   }
   onSearching = (e) =>
-  {
+  { 
+    this.setState({
+      show:true
+    })
     let value = e.target.value;
-   if(value === ' ' || value === ''){
-      console.log('No results');
-  }
-  else
-   axios.get('http://localhost:5000/products/searching/'+value)
-    .then(response => {
-     return this.setState({ products: response.data })
-   })
-   .catch((error) => {
-     console.log(error);
-   })
+
+      axios.get('http://localhost:5000/products/searching/'+value)
+      .then(response => {
+        if(!response.data){
+          return this.setState({ products:'',show:false })
+        }
+        else
+       return this.setState({ products: response.data,show:false })
+       
+     })
+     .catch((error) => {
+       console.log(error);
+     })
   }
 
   autocompleteList() {
@@ -38,6 +44,7 @@ class Navbar extends Component {
   }
 
   render() {
+    const{show}=this.state;
     return (
       <nav className="navbar navbar-light bg-light navbar-expand-lg" id="navbar">
        
@@ -45,30 +52,30 @@ class Navbar extends Component {
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
         <li className="navbar-item">
-    <Link to="/" className="nav-link">Store</Link>
+            <Link to="/" className="nav-link">Store</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/products" className="nav-link">Products</Link>
+           <Link to="/products" className="nav-link">Products</Link>
           </li>
           <li className="navbar-item">
           <Link to="/about" className="nav-link">About</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/contact" className="nav-link">Contact us</Link>
+           <Link to="/contact" className="nav-link">Contact us</Link>
           </li>
         </ul>  
-       <div class="dropdown-search">
-    <button class="dropbtn">D
+       <div className="dropdown-search">
+    <button className="dropbtn">D
     </button>
-    <div class="dropdown-content-search">     
-    {this.autocompleteList()}
+    <div className="dropdown-content-search">     
+   { show  || this.autocompleteList()}
     </div>
   </div> 
-        <input   type="search" id="searching"
-                            required
+        <input   type="text" id="searching"
                             placeholder="Searching.."
                             autoComplete="false"
                             onChange={this.onSearching}
+                     
                     />
          <div className="dropdown-caddie">   
           <span className="badge badge-pill badge-info" id="notif" onClick={

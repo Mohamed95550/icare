@@ -6,45 +6,23 @@ const port = process.env.PORT || 5000;
 const productController = require('./routes/product.controller');
 const userController = require('./routes/user.controller');
 const passport = require ('passport');
-const keys = require('./config/keys');
-const googleStrategy = require ('passport-google-oauth20').Strategy;
-const localStrategy = require ('passport-local').Strategy;
+const  session  = require ('express-session') ;
 
 app.use(cors());
 
+//passport config
+//require('./config/passport')(passport);
 
-passport.use(new googleStrategy({
-
-  clientID : keys.googleClientID,
-  clientSecret : keys.googleClientSecret,
-  callbackURL:'/auth/google/callback'
-},(accessToken,profile,refreshToken,done)=>{
-
-console.log("accessToken :"+accessToken);
-console.log("RefreshToken :"+refreshToken);
-console.log("Profile :"+profile);
-}))
-
-app.get('/auth/google',passport.authenticate("google",
-{
-    scope:['profile','email']
-}
-));
-
-app.get(
-'/auth/google/callback',
-passport.authenticate('google'),
-(req, res) => {
-res.redirect('/products');
-}
-);
-
-
+//Parse content
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+
+//Switch to environements(prod or dev)
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static('client/build'));
 }
+
+//Config connection in dev or production
 if(process.env.NODE_ENV === 'production'){
     mongoose.connect(process.env.MONGODB_URI , { useNewUrlParser: true, useUnifiedTopology:true });
 }
@@ -58,6 +36,19 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
+//use session
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}))
+
+//use middlewares
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Routes
+//require('./routes/authgoogle')(passport);
 app.use('/products', productController);
 app.use('/users', userController);
 

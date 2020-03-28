@@ -32,14 +32,19 @@ export default class Register extends Component {
     e.preventDefault();
     const user = {
       email: this.state.email,
-      password: this.state.password, 
+      password: this.state.password
     }
-    console.log(user);
-/*
-    axios.get('http://localhost:5000/users/'+id)
-      .then(res => console.log(res.data))
-      console.log(user);*/
-    window.location = './dashboard';
+  
+    axios.post('http://localhost:5000/users/login',user)
+      .then(
+        (res=> res.data > 0) ? res => console.log(res.data) : null
+      )
+      this.setState({
+        email:'',
+        password:''
+      })
+     
+    //window.location = './dashboard';
   }
   render() {
     return (
@@ -49,6 +54,7 @@ export default class Register extends Component {
       <div className="row"> 
             <div className="form-group col-12">
                 <input    type="email"
+                    name="email"
                     required
                     className="form-control"
                     value={this.state.email}
@@ -60,6 +66,7 @@ export default class Register extends Component {
         <div className="row"> 
             <div className="form-group col-12">
                 <input    type="password"
+                   name="password"
                     required
                     className="form-control"
                     value={this.state.password}

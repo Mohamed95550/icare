@@ -180,8 +180,9 @@ background-color: greenyellow;
 /************************* end caddie dropdown ************/
 #marginNav{
   margin-top: 30px;
-  box-shadow: 3px 1px 4px 1px rgba(0,0,0,0.2);
+  box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.2);
   padding:20px;
+  border-radius: 10px;
 }
 #marginNavStore{
   margin-top: 30px;
@@ -195,6 +196,7 @@ background-color: greenyellow;
 .dropdown-content-search {
   /*display: none;*/
   position: absolute;
+  /*filter: blur(1px);*/
   background-color: #f9f9f9;
   width: 100%;
   left: 0;
@@ -204,6 +206,7 @@ background-color: greenyellow;
   padding-left: 100px;
 
 }
+
 .dropdown-search {
   float: left;
   overflow: hidden;

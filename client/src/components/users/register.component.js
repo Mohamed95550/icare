@@ -21,9 +21,7 @@ export default class Register extends Component {
       password: '',
       confirm: '',
         avatar: '',
-        flash:' ',
-        isValid:false
-
+        flash:' '
     }
   }
   
@@ -57,7 +55,6 @@ export default class Register extends Component {
     })
   }
 
-
   onChangeAvatar(e) {
     this.setState({
       avatar: e.target.value
@@ -65,21 +62,6 @@ export default class Register extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-
-if(this.state.email === "med@gmail.com"){
-  this.setState({
-    flash :"email deja utiliser",
-    isValid:false
-  })
-}
-  else
-  {
-    this.setState({
-      flash :" ",
-      isValid:true
-    })
-  }
-  if(this.state.isValid){
 
     const user = {
       firstname: this.state.firstname,
@@ -90,23 +72,19 @@ if(this.state.email === "med@gmail.com"){
       avatar: this.state.avatar   
     }
     console.log(user);
-    this.setState({
-      firstname: '',
-      lastname:'',
-      email: '',
-      password: '',
-      confirm: '',
-        avatar: '',
-        flash:' ',
-        isValid:false
-    })
-/*
-    axios.post('http://localhost:5000/users/register', user)
+
+     axios.post('http://localhost:5000/users/register', user)
       .then(res => console.log(res.data))
-    window.location = './login';*/
-  }
-    else
-    console.log('problem');
+    
+      /*this.setState({
+          firstname: '',
+          lastname:'',
+          email: '',
+          password: '',
+          confirm: '',
+          avatar: '',
+      })*/ 
+    window.location = './login';
   }
   render() {
     return (
@@ -114,7 +92,7 @@ if(this.state.email === "med@gmail.com"){
      {  this.state.flash !== " "? 
         <div className="alert alert-warning alert-dismissible fade show" role="alert">
       {this.state.flash}
-        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close" >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>:null
@@ -163,6 +141,8 @@ if(this.state.email === "med@gmail.com"){
                     value={this.state.password}
                     onChange={this.onChangePassword}
                     placeholder="Enter your password"
+                    minLength="7"
+                    maxLength="15"
                     /> 
             </div>  
             <div className="form-group col-6">
@@ -172,6 +152,8 @@ if(this.state.email === "med@gmail.com"){
                     value={this.state.confirm}
                     onChange={this.onChangeConfirmPassword}
                     placeholder="Confirm your password"
+                    minLength="7"
+                    maxLength="15"
                     /> 
             </div>              
          </div>
