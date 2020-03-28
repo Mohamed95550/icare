@@ -7,7 +7,7 @@ const Product = props => (
      <div className="row">
        <div className="col-md-2">
        {(Number(props.product.solde) > 0) ? <h6><a href="#" className="badge badge-warning">-{props.product.solde} %</a></h6>:""}
-       </div>
+       </div>}
        <div className="col-md-8"></div>
        <div className="col-md-2">
           {(Number(props.product.stock) <6 ) ? <h6><a href="#" className="badge badge-danger" id="floatR">{props.product.stock} stock</a></h6>: <h6><a href="#" className="badge badge-success" id="txtPrice">In stock</a></h6>}   
@@ -20,8 +20,9 @@ const Product = props => (
           <p className="card-text" id="txtDecription">{props.product.description}.</p>
           <h5><a href="#" className="badge badge-success" id="txtPrice">{props.product.price} &#8364;</a></h5>
           {Number(props.product.stock) === 0 ? <span className="btn btn-outline-danger  btn-block">Coming soon</span>:<Link to={"/edit/"+props.product._id}> <span className="btn btn-outline-success  btn-block" id="btn" >Checkout</span></Link>}
-      
+    
       </div>
+     
   </div>
 )
 
@@ -62,7 +63,7 @@ export default class ProductList extends Component {
 
   productList() {
     return this.state.products.map(currentproduct => {
-      return <Product product={currentproduct} deleteProduct={this.deleteProduct} key={currentproduct._id}/>;
+      return <Product spin={this.loadingProduct} product={currentproduct} deleteProduct={this.deleteProduct} key={currentproduct._id}/>;
     })
   }
 
