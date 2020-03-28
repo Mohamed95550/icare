@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import spinner from './loading.gif';
 const Product = props => (
     <div className="card col-md-3" id="card" >
      <div className="row">
@@ -24,23 +25,30 @@ const Product = props => (
   </div>
 )
 
+
+
 export default class ProductList extends Component {
   constructor(props) {
     super(props);
 
     this.deleteProduct = this.deleteProduct.bind(this)
 
-    this.state = {products: []};
+    this.state = {
+      products: [],
+      loading:true
+    };
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/products/')
-      .then(response => {
-        this.setState({ products: response.data })
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+      setTimeout(()=>{
+        axios.get('http://localhost:5000/products/')
+        .then(response => {
+          this.setState({ products: response.data, loading:false })       
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      },1000)
   }
 
   deleteProduct(id) {
@@ -59,14 +67,16 @@ export default class ProductList extends Component {
   }
 
   render() {
+    const {loading}=this.state;
     return (
       <div id="marginNavStore">
-       <h1>STORE</h1> 
-  
-          <div className="row">
-             { this.productList() }
-             <div className="col-md-1"></div>
-          </div>           
+        <h1>STORE</h1> 
+     {loading? <div className="loadingFrame">
+        <div className="spinner"><img src={spinner}/></div>
+      </div> :          
+          <div className="row">    
+              {this.productList()} 
+          </div>  }        
       </div>
     )
   }
