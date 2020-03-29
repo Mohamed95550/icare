@@ -7,7 +7,7 @@ const Product = props => (
      <div className="row">
        <div className="col-md-2">
        {(Number(props.product.solde) > 0) ? <h6><a href="#" className="badge badge-warning">-{props.product.solde} %</a></h6>:""}
-       </div>}
+       </div>
        <div className="col-md-8"></div>
        <div className="col-md-2">
           {(Number(props.product.stock) <6 ) ? <h6><a href="#" className="badge badge-danger" id="floatR">{props.product.stock} stock</a></h6>: <h6><a href="#" className="badge badge-success" id="txtPrice">In stock</a></h6>}   
