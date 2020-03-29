@@ -15,7 +15,7 @@ router.route('/add').post((req, res) => {
     const price= Number(req.body.price);
     const stock = Number(req.body.stock);
     const solde = Number(req.body.solde);
-    const images = Number(req.body.images);
+    const images = req.body.images;
   
     const newProduct = new Product({
      title,

@@ -131,7 +131,6 @@ export default class CreateProduct extends Component {
                 </div>
                 <div className="form-group col-4"> 
                 <input  type="text"
-                    required
                     className="form-control"
                     value={this.state.solde}
                     onChange={this.onChangeSolde}
@@ -143,7 +142,6 @@ export default class CreateProduct extends Component {
         <div className="row">
                 <div className="form-group col-12"> 
                     <input  type="text"
-                        required
                         className="form-control"
                         value={this.state.images}
                         onChange={this.onChangeImages}
